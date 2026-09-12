@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GGKSA General Elections 2026 — Your Token</title>
+<style>
+:root{
+  --bg:#f6fbfa;
+  --card:#ffffff;
+  --teal:#0b6b5a;
+  --teal-dark:#084f42;
+  --accent:#d4a24a;
+  --muted:#6b7a78;
+  --radius:12px;
+  --max-width:460px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  background:linear-gradient(180deg,var(--bg) 0%, #eaf6f2 100%);
+  color:#123;
+  padding:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100%;
+}
+.container{width:100%;max-width:var(--max-width);text-align:center}
+.brand{
+  background:linear-gradient(135deg,var(--teal) 0%, var(--teal-dark) 100%);
+  color:#fff;padding:14px;border-radius:14px;margin-bottom:18px;
+  box-shadow:0 6px 18px rgba(11,107,90,0.12);
+}
+.brand h1{font-size:1.05rem;margin:0}
+.brand p{margin:4px 0 0;font-size:0.85rem;color:rgba(255,255,255,0.9)}
+.card{
+  background:var(--card);border-radius:var(--radius);padding:32px 24px;
+  box-shadow:0 8px 30px rgba(10,30,30,0.06);
+}
+.card.error{border:1px solid #f3b9b9}
+.label{font-size:0.95rem;color:var(--muted);margin-bottom:8px}
+.token{
+  font-size:2.6rem;font-weight:800;letter-spacing:4px;color:var(--teal-dark);
+  margin:8px 0 16px;
+}
+.hint{font-size:0.85rem;color:var(--muted);margin-top:12px;line-height:1.5}
+.errormsg{color:#8a2c2c;font-size:0.95rem}
+a.back{display:inline-block;margin-top:18px;color:var(--teal);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="brand">
+    <h1>GGKSA General Elections 2026</h1>
+    <p>Registration Confirmation</p>
+  </div>
+
+  <div class="card" id="card">
+    <div class="label">Loading your Token ID…</div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const token = params.get('token');
+const card = document.getElementById('card');
+
+if (token && token.trim()) {
+  card.innerHTML = `
+    <div class="label">Your Registration Token ID</div>
+    <div class="token">${token.trim()}</div>
+    <div class="hint">Keep this Token ID safe or take a screenshot.<br>Do not share it with anyone else.</div>
+  `;
+} else {
+  card.classList.add('error');
+  card.innerHTML = `
+    <div class="errormsg">No Token ID was found.</div>
+    <div class="hint">This page should be reached automatically after submitting the registration form. If you opened this page directly, please go back and complete the registration form first.</div>
+    <a class="back" href="registration.html">&larr; Back to Registration</a>
+  `;
+}
+</script>
+</body>
+</html>

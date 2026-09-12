@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GGKSA General Elections 2026 Registration</title>
+<meta name="description" content="GGKSA voter registration for General Elections 2026">
+<style>
+:root{
+  --bg:#f6fbfa;
+  --card:#ffffff;
+  --teal:#0b6b5a;
+  --teal-dark:#084f42;
+  --accent:#d4a24a;
+  --muted:#6b7a78;
+  --radius:12px;
+  --max-width:460px;
+  --gap:12px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  background:linear-gradient(180deg,var(--bg) 0%, #eaf6f2 100%);
+  color:#123;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:24px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+.container{width:100%;max-width:var(--max-width)}
+header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.brand{
+  background:linear-gradient(135deg,var(--teal) 0%, var(--teal-dark) 100%);
+  color:#fff;padding:14px;border-radius:14px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 6px 18px rgba(11,107,90,0.12);width:100%;
+}
+.brand img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.brand h1{font-size:1.05rem;margin:0;line-height:1.05;letter-spacing:0.2px}
+.brand p{margin:0;font-size:0.85rem;color:rgba(255,255,255,0.9)}
+form.card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 8px 30px rgba(10,30,30,0.06)}
+.row{display:flex;gap:var(--gap);flex-wrap:wrap}
+label{display:block;font-weight:600;font-size:0.9rem;margin-bottom:6px;color:var(--teal-dark)}
+.field{width:100%}
+input[type="text"], input[type="tel"], input[type="number"], input[type="file"]{
+  width:100%;padding:12px;border-radius:10px;border:1px solid #e6efec;background:#fbfffe;font-size:1rem;outline:none;
+}
+input[type="file"]{padding:10px}
+input:focus{box-shadow:0 0 0 3px rgba(11,107,90,0.08);border-color:var(--teal)}
+.two{flex:1 1 48%}
+.preview{display:flex;gap:10px;align-items:center;margin-top:8px}
+.preview img{width:92px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #eef6f3;background:#f8fdfc}
+.hint{font-size:0.85rem;color:var(--muted);margin-top:6px}
+.submit{margin-top:14px;display:flex;gap:10px;align-items:center}
+button.primary{
+  flex:1;background:linear-gradient(90deg,var(--teal) 0%, var(--teal-dark) 100%);color:#fff;border:none;padding:14px;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 8px 18px rgba(11,107,90,0.12);
+}
+button.primary:disabled{opacity:0.7;cursor:not-allowed}
+button.primary:active{transform:translateY(1px)}
+.note{font-size:0.85rem;color:var(--muted);text-align:center;margin-top:12px}
+.error-banner{display:none;background:#fdecec;color:#8a2c2c;border:1px solid #f3b9b9;padding:10px 12px;border-radius:10px;font-size:0.85rem;margin-bottom:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.file-info{font-size:0.82rem;color:var(--muted);margin-left:8px}
+@media (max-width:420px){ .brand h1{font-size:0.95rem} .preview img{width:84px;height:64px} }
+</style>
+</head>
+<body>
+<div class="container" role="main">
+  <header>
+    <div class="brand" aria-hidden="false">
+      <img src="C:\Users\sarkl\OneDrive\Desktop\GGKSA Elections 2026\Elections prototype 3\logo.png" alt="GGKSA logo">
+      <div>
+        <h1>GGKSA General Elections 2026</h1>
+        <p>Voter Registration</p>
+      </div>
+    </div>
+  </header>
+
+  <form id="voterForm" class="card" autocomplete="off" aria-labelledby="formTitle">
+    <h2 id="formTitle" class="sr-only">Voter Registration Form</h2>
+
+    <div class="error-banner" id="errorBanner"></div>
+
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input id="name" name="Name" type="text" required aria-required="true" placeholder="Enter full name">
+    </div>
+
+    <div class="row">
+      <div class="field two">
+        <label for="phone">Phone Number</label>
+        <input id="phone" name="Phone" type="tel" inputmode="tel" pattern="[0-9+\-\s]{7,20}" required aria-required="true" placeholder="+91 98765 43210">
+      </div>
+      <div class="field two">
+        <label for="age">Age</label>
+        <input id="age" name="Age" type="number" min="16" max="120" required aria-required="true" placeholder="18">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="address">Address</label>
+      <input id="address" name="Address" type="text" required placeholder="Village, City, District">
+    </div>
+
+    <div class="field">
+      <label for="college">College or Institute</label>
+      <input id="college" name="College" type="text" required placeholder="College name">
+    </div>
+
+    <div class="field">
+      <label for="photo">Upload Photo</label>
+      <input id="photo" name="Photo" type="file" accept="image/*" required aria-describedby="photoHint">
+      <div id="photoHint" class="hint">Clear headshot preferred. Images will be compressed before upload.</div>
+      <div class="preview" aria-hidden="false">
+        <img id="photoPreview" alt="Photo preview">
+        <div class="file-info" id="photoInfo"></div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="collegeId">Upload College Institute ID</label>
+      <input id="collegeId" name="CollegeID" type="file" accept="image/*" required>
+      <div class="preview">
+        <img id="idPreview" alt="College ID preview">
+        <div class="file-info" id="idInfo"></div>
+      </div>
+    </div>
+
+    <div class="submit">
+      <button type="submit" class="primary" id="submitBtn" aria-live="polite">Submit Registration</button>
+    </div>
+    <div class="note">You will receive a Token ID after successful registration</div>
+  </form>
+</div>
+
+<script>
+// =====================================================================
+// CONFIG — replace with your own deployed Apps Script Web App /exec URL
+// IMPORTANT: every time you edit the Apps Script code you must create a
+// NEW deployment (Deploy > Manage deployments > Edit > New version) or
+// the old code keeps running even though it looks updated in the editor.
+// =====================================================================
+const scriptURL = "https://script.google.com/macros/s/AKfycbzUeyBLJ2B0PT1SJgsbt60QQ5eiVO-Ly9P86cF9RgNzTArlc_Lu10UGfGk0Mx3ikbNCYQ/exec";
+
+const MAX_DIMENSION = 1200; // max width or height in pixels for compressed image
+const JPEG_QUALITY = 0.75;  // 0.0 - 1.0 quality for JPEG compression
+
+// ELEMENTS
+const form = document.getElementById('voterForm');
+const submitBtn = document.getElementById('submitBtn');
+const photoInput = document.getElementById('photo');
+const idInput = document.getElementById('collegeId');
+const photoPreview = document.getElementById('photoPreview');
+const idPreview = document.getElementById('idPreview');
+const photoInfo = document.getElementById('photoInfo');
+const idInfo = document.getElementById('idInfo');
+const errorBanner = document.getElementById('errorBanner');
+
+function showError(msg) {
+  errorBanner.textContent = msg;
+  errorBanner.style.display = 'block';
+}
+function clearError() {
+  errorBanner.style.display = 'none';
+  errorBanner.textContent = '';
+}
+
+// Utility: format bytes
+function formatBytes(bytes) {
+  if (!bytes) return '0 B';
+  const units = ['B','KB','MB','GB'];
+  let i = 0;
+  while (bytes >= 1024 && i < units.length - 1) {
+    bytes /= 1024;
+    i++;
+  }
+  return `${bytes.toFixed(1)} ${units[i]}`;
+}
+
+// Preview selected file (uncompressed preview)
+function previewFile(input, previewImg, infoEl) {
+  const file = input.files && input.files[0];
+  if (!file) {
+    previewImg.src = '';
+    infoEl.textContent = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    previewImg.src = e.target.result;
+    infoEl.textContent = `Original: ${formatBytes(file.size)} • ${file.type}`;
+  };
+  reader.readAsDataURL(file);
+}
+
+photoInput.addEventListener('change', () => previewFile(photoInput, photoPreview, photoInfo));
+idInput.addEventListener('change', () => previewFile(idInput, idPreview, idInfo));
+
+// Compress image file using canvas, returns a Promise<File>
+async function compressImageFile(file, maxDim = MAX_DIMENSION, quality = JPEG_QUALITY) {
+  return new Promise((resolve, reject) => {
+    if (!file || !file.type.startsWith('image/')) {
+      return reject(new Error('Not an image file'));
+    }
+    const img = new Image();
+    img.onload = () => {
+      let { width, height } = img;
+      const max = Math.max(width, height);
+      if (max > maxDim) {
+        const scale = maxDim / max;
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(blob => {
+        if (!blob) return reject(new Error('Compression failed'));
+        const newName = (file.name || 'image').replace(/\.[^/.]+$/, '') + '.jpg';
+        const compressedFile = new File([blob], newName, { type: 'image/jpeg', lastModified: Date.now() });
+        resolve(compressedFile);
+      }, 'image/jpeg', quality);
+    };
+    img.onerror = () => reject(new Error('Image load error'));
+    const reader = new FileReader();
+    reader.onload = e => { img.src = e.target.result; };
+    reader.onerror = () => reject(new Error('File read error'));
+    reader.readAsDataURL(file);
+  });
+}
+
+// Convert a File/Blob to a plain base64 string (no "data:...;base64," prefix).
+// Sending files this way — as plain text fields inside FormData — is what
+// makes them arrive intact and in the right place on the Apps Script side.
+// Raw File objects sent through fetch()+FormData are not reliably readable
+// in Apps Script's e.parameter, which is what was breaking the photo/ID
+// links and pushing values into the wrong sheet columns.
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result; // "data:image/jpeg;base64,XXXX"
+      const commaIdx = result.indexOf(',');
+      resolve(commaIdx >= 0 ? result.slice(commaIdx + 1) : result);
+    };
+    reader.onerror = () => reject(new Error('Base64 conversion failed'));
+    reader.readAsDataURL(file);
+  });
+}
+
+// Main submit handler: compress files, base64-encode them, then send
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  clearError();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+  try {
+    if (!photoInput.files[0] || !idInput.files[0]) {
+      showError('Please upload both photo and college ID.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Registration';
+      return;
+    }
+
+    const originalPhoto = photoInput.files[0];
+    const originalId = idInput.files[0];
+
+    // Compress in parallel
+    const [compressedPhoto, compressedId] = await Promise.all([
+      compressImageFile(originalPhoto).catch(err => { throw new Error('Photo compression failed: ' + err.message); }),
+      compressImageFile(originalId).catch(err => { throw new Error('ID compression failed: ' + err.message); })
+    ]);
+
+    photoInfo.textContent = `Original: ${formatBytes(originalPhoto.size)} → Compressed: ${formatBytes(compressedPhoto.size)}`;
+    idInfo.textContent = `Original: ${formatBytes(originalId.size)} → Compressed: ${formatBytes(compressedId.size)}`;
+
+    // Base64-encode the compressed images
+    const [photoBase64, idBase64] = await Promise.all([
+      fileToBase64(compressedPhoto),
+      fileToBase64(compressedId)
+    ]);
+
+    // Build FormData — every value here is a plain string, so it lands
+    // as a normal e.parameter value on the Apps Script side, in order.
+    const data = new FormData();
+    data.append('Name', document.getElementById('name').value.trim());
+    data.append('Phone', document.getElementById('phone').value.trim());
+    data.append('Age', document.getElementById('age').value.trim());
+    data.append('Address', document.getElementById('address').value.trim());
+    data.append('College', document.getElementById('college').value.trim());
+    data.append('PhotoBase64', photoBase64);
+    data.append('PhotoName', compressedPhoto.name);
+    data.append('CollegeIDBase64', idBase64);
+    data.append('CollegeIDName', compressedId.name);
+
+    const res = await fetch(scriptURL, { method: 'POST', body: data });
+    const text = await res.text();
+
+    if (res.ok && text && !text.toLowerCase().startsWith('error')) {
+      const token = text.trim();
+      window.location.href = 'token.html?token=' + encodeURIComponent(token);
+    } else {
+      showError('Registration failed. Server response: ' + text);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Registration';
+    }
+  } catch (err) {
+    console.error(err);
+    showError('Error: ' + (err.message || 'Unknown error'));
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Registration';
+  }
+});
+</script>
+</body>
+</html>
