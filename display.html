@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GGKSA General Elections 2026 — Now Calling</title>
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+:root{
+  --bg-1:#071a16;
+  --bg-2:#0c2620;
+  --panel:rgba(255,255,255,0.04);
+  --panel-border:rgba(255,255,255,0.09);
+  --teal:#16a889;
+  --teal-bright:#2dd4b1;
+  --gold:#e0b558;
+  --text:#eef6f3;
+  --muted:#8ba79e;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:"Segoe UI", Inter, system-ui, -apple-system, "Helvetica Neue", Arial;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(22,168,137,0.25), transparent 60%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100%;
+  padding:32px 24px;
+  text-align:center;
+  overflow:hidden;
+}
+
+.brand{
+  position:absolute;top:28px;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.brand img{width:46px;height:46px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--panel-border)}
+.brand .titles{text-align:left}
+.brand .titles .main{font-weight:700;font-size:1.05rem;color:var(--text);letter-spacing:0.3px}
+.brand .titles .sub{font-size:0.78rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+
+.status-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  padding:8px 18px;border-radius:999px;
+  font-size:0.82rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
+  margin-bottom:18px;
+  backdrop-filter:blur(6px);
+}
+.status-pill .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--teal-bright);
+  box-shadow:0 0 0 0 rgba(45,212,177,0.6);
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(45,212,177,0.5)}
+  70%{box-shadow:0 0 0 10px rgba(45,212,177,0)}
+  100%{box-shadow:0 0 0 0 rgba(45,212,177,0)}
+}
+
+.batch-label{font-size:1.15rem;color:var(--muted);font-weight:500;margin-bottom:36px}
+.batch-label strong{color:var(--teal-bright);font-weight:700}
+
+.tokens{
+  display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin-bottom:40px;
+}
+.token-box{
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  border-top:3px solid var(--teal-bright);
+  border-radius:18px;
+  padding:26px 38px;
+  backdrop-filter:blur(8px);
+  min-width:150px;
+  transition:transform 0.2s ease;
+}
+.token-box .num{
+  font-size:4.6rem;
+  font-weight:800;
+  color:var(--text);
+  letter-spacing:2px;
+  line-height:1;
+  text-shadow:0 0 24px rgba(45,212,177,0.25);
+}
+
+.empty-state{font-size:1.3rem;color:var(--muted);margin-bottom:24px;max-width:460px}
+
+.progress{font-size:0.88rem;color:var(--muted);letter-spacing:0.5px}
+.progress strong{color:var(--gold)}
+
+.repeat-btn{
+  position:fixed;bottom:28px;right:28px;
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  color:var(--text);
+  padding:12px 20px;border-radius:12px;
+  font-weight:600;font-size:0.9rem;cursor:pointer;
+  backdrop-filter:blur(6px);
+  transition:background 0.2s ease;
+}
+.repeat-btn:hover{background:rgba(255,255,255,0.08)}
+
+.start-overlay{
+  position:fixed;inset:0;
+  background:linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  color:var(--text);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;z-index:10;
+}
+.start-overlay img{width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:4px}
+.start-overlay h2{margin:0;font-size:1.3rem;font-weight:700}
+.start-overlay p{margin:0;color:var(--muted);font-size:0.9rem;max-width:360px}
+.start-overlay button{
+  background:linear-gradient(90deg, var(--teal) 0%, var(--teal-bright) 100%);
+  color:#05201a;border:none;padding:16px 32px;border-radius:12px;
+  font-weight:700;font-size:1.05rem;cursor:pointer;
+  box-shadow:0 10px 24px rgba(22,168,137,0.3);
+}
+
+@media (max-width:560px){
+  .token-box .num{font-size:2.9rem}
+  .token-box{padding:18px 22px;min-width:100px}
+  .batch-label{font-size:0.95rem}
+}
+</style>
+</head>
+<body>
+
+<div class="start-overlay" id="startOverlay">
+  <img src="logo.png" alt="GGKSA logo">
+  <h2>GGKSA General Elections 2026</h2>
+  <p>Token Calling Display — click below to enable voice announcements before the session begins.</p>
+  <button id="startBtn">Start Display</button>
+</div>
+
+<div class="brand">
+  <img src="logo.png" alt="GGKSA logo">
+  <div class="titles">
+    <div class="main">GGKSA General Elections 2026</div>
+    <div class="sub">Voter Token Display</div>
+  </div>
+</div>
+
+<div class="status-pill"><span class="dot"></span> Now Calling</div>
+<div class="batch-label" id="batchLabel">Waiting for first batch…</div>
+
+<div class="tokens" id="tokensContainer"></div>
+<div class="empty-state" id="emptyState" style="display:none">No batch has been called yet. Please wait for the announcement.</div>
+<div class="progress" id="progress"></div>
+
+<button class="repeat-btn" id="repeatBtn">🔊 Repeat Announcement</button>
+
+<script>
+// =====================================================================
+// CONFIG — same Apps Script Web App URL used by registration.html
+// =====================================================================
+const scriptURL = "https://script.google.com/macros/s/AKfycbxR5Y8vyb0ryrYrVKSkZLEr53MhsSr4LXIkyMurK7N3bXCvaUwxBFOwNt5RCcEGpeBlbA/exec";
+const POLL_INTERVAL_MS = 4000;
+
+let lastAnnouncedBatch = null;
+let currentTokens = [];
+
+const tokensContainer = document.getElementById('tokensContainer');
+const emptyState = document.getElementById('emptyState');
+const batchLabel = document.getElementById('batchLabel');
+const progress = document.getElementById('progress');
+const startOverlay = document.getElementById('startOverlay');
+const startBtn = document.getElementById('startBtn');
+const repeatBtn = document.getElementById('repeatBtn');
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.9;
+  utter.pitch = 1;
+  window.speechSynthesis.speak(utter);
+}
+
+function announceBatch(tokens) {
+  if (!tokens.length) return;
+  const spoken = tokens.join(', ');
+  speak(`Attention voters. Now calling token numbers ${spoken}. Please proceed to the polling booth.`);
+}
+
+function render(state) {
+  if (state.error) {
+    batchLabel.textContent = 'Error: ' + state.error;
+    return;
+  }
+
+  if (!state.tokens || state.tokens.length === 0) {
+    tokensContainer.innerHTML = '';
+    emptyState.style.display = 'block';
+    batchLabel.textContent = 'Waiting for first batch…';
+    progress.innerHTML = state.totalRegistered ? `<strong>${state.totalRegistered}</strong> voters registered` : '';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  batchLabel.innerHTML = `Batch <strong>${state.batchNumber}</strong> of ${state.totalBatches} — Tokens <strong>${state.rangeStart}</strong> to <strong>${state.rangeEnd}</strong>`;
+  progress.innerHTML = `<strong>${state.totalRegistered}</strong> voters registered total`;
+
+  tokensContainer.innerHTML = state.tokens.map(t => `
+    <div class="token-box"><div class="num">${t}</div></div>
+  `).join('');
+
+  currentTokens = state.tokens;
+
+  if (state.batchNumber !== lastAnnouncedBatch) {
+    lastAnnouncedBatch = state.batchNumber;
+    announceBatch(state.tokens);
+  }
+}
+
+async function poll() {
+  try {
+    const res = await fetch(`${scriptURL}?action=currentBatch`);
+    const state = await res.json();
+    render(state);
+  } catch (err) {
+    console.error('Poll failed', err);
+  }
+}
+
+startBtn.addEventListener('click', () => {
+  // A user gesture is required to unlock audio in most browsers.
+  speak('Display started.');
+  startOverlay.style.display = 'none';
+  poll();
+  setInterval(poll, POLL_INTERVAL_MS);
+});
+
+repeatBtn.addEventListener('click', () => {
+  if (currentTokens.length) announceBatch(currentTokens);
+});
+</script>
+</body>
+</html>
