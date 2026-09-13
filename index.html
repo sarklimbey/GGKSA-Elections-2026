@@ -92,7 +92,7 @@ button.primary:active{transform:translateY(1px)}
     <div class="row">
       <div class="field two">
         <label for="phone">Phone Number</label>
-        <input id="phone" name="Phone" type="tel" inputmode="tel" pattern="[0-9+\-\s]{7,20}" required aria-required="true" placeholder="+91 98765 43210">
+        <input id="phone" name="Phone" type="tel" inputmode="tel" pattern="[0-9+\-\s]{7,20}" required aria-required="true" placeholder="10 digit number">
       </div>
       <div class="field two">
         <label for="age">Age</label>
@@ -107,13 +107,13 @@ button.primary:active{transform:translateY(1px)}
 
     <div class="field">
       <label for="college">College or Institute</label>
-      <input id="college" name="College" type="text" required placeholder="College/Institute name">
+      <input id="college" name="College" type="text" required placeholder="">
     </div>
 
     <div class="field">
       <label for="photo">Upload Passport Photo</label>
       <input id="photo" name="Photo" type="file" accept="image/*" required aria-describedby="photoHint">
-      <div id="photoHint" class="hint">Clear headshot preferred. Images will be compressed before upload.</div>
+      <div id="photoHint" class="hint">Clear live photo preferred. Images will be compressed before upload.</div>
       <div class="preview" aria-hidden="false">
         <img id="photoPreview" alt="Photo preview">
         <div class="file-info" id="photoInfo"></div>
