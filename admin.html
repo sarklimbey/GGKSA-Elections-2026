@@ -187,7 +187,9 @@ function renderHistory(data) {
 
 async function pollStatus() {
   try {
-    const res = await fetch(`${scriptURL}?action=currentBatch`);
+    const body = new FormData();
+    body.append('action', 'currentBatch');
+    const res = await fetch(scriptURL, { method: 'POST', body });
     renderState(await res.json());
   } catch (err) {
     console.error('Status poll failed', err);
@@ -196,7 +198,9 @@ async function pollStatus() {
 
 async function pollHistory() {
   try {
-    const res = await fetch(`${scriptURL}?action=log`);
+    const body = new FormData();
+    body.append('action', 'log');
+    const res = await fetch(scriptURL, { method: 'POST', body });
     renderHistory(await res.json());
   } catch (err) {
     console.error('History poll failed', err);
