@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GGKSA General Elections 2026 — Batch Admin</title>
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+:root{
+  --bg:#f6fbfa;
+  --card:#ffffff;
+  --teal:#0b6b5a;
+  --teal-dark:#084f42;
+  --accent:#d4a24a;
+  --muted:#6b7a78;
+  --radius:12px;
+  --max-width:480px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  background:linear-gradient(180deg,var(--bg) 0%, #eaf6f2 100%);
+  color:#123;
+  padding:24px;
+  display:flex;justify-content:center;
+}
+.container{width:100%;max-width:var(--max-width)}
+.brand{
+  background:linear-gradient(135deg,var(--teal) 0%, var(--teal-dark) 100%);
+  color:#fff;padding:14px;border-radius:14px;display:flex;align-items:center;gap:12px;margin-bottom:18px;
+  box-shadow:0 6px 18px rgba(11,107,90,0.12);
+}
+.brand img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+.brand h1{font-size:1rem;margin:0}
+.brand p{margin:0;font-size:0.82rem;color:rgba(255,255,255,0.9)}
+.card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 8px 30px rgba(10,30,30,0.06);margin-bottom:16px}
+.card h2{margin:0 0 12px;font-size:0.95rem;color:var(--teal-dark)}
+.stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eef6f3;font-size:0.95rem}
+.stat-row:last-child{border-bottom:none}
+.stat-row .val{font-weight:700;color:var(--teal-dark)}
+.big-batch{text-align:center;padding:20px 0}
+.big-batch .range{font-size:2.2rem;font-weight:800;color:var(--teal-dark);letter-spacing:2px}
+.big-batch .label{font-size:0.9rem;color:var(--muted);margin-top:6px}
+button.primary{
+  width:100%;background:linear-gradient(90deg,var(--teal) 0%, var(--teal-dark) 100%);color:#fff;border:none;
+  padding:16px;border-radius:10px;font-weight:700;font-size:1.05rem;cursor:pointer;
+  box-shadow:0 8px 18px rgba(11,107,90,0.12);
+}
+button.primary:disabled{opacity:0.5;cursor:not-allowed}
+.passcode-row{display:flex;gap:8px;margin-bottom:12px}
+.passcode-row input{
+  flex:1;padding:12px;border-radius:10px;border:1px solid #e6efec;background:#fbfffe;font-size:1rem;
+}
+.passcode-row button{
+  background:var(--teal-dark);color:#fff;border:none;padding:0 16px;border-radius:10px;font-weight:600;cursor:pointer;
+}
+.locked-note{font-size:0.82rem;color:var(--muted);margin-top:8px}
+.unlocked-note{font-size:0.82rem;color:var(--teal);margin-top:8px;font-weight:600}
+.msg{font-size:0.88rem;margin-top:10px;text-align:center}
+.msg.error{color:#8a2c2c}
+.msg.success{color:var(--teal)}
+table{width:100%;border-collapse:collapse;font-size:0.85rem}
+th,td{text-align:left;padding:6px 4px;border-bottom:1px solid #eef6f3}
+th{color:var(--muted);font-weight:600}
+.done-banner{
+  background:#eaf6f2;border:1px solid var(--teal);color:var(--teal-dark);padding:14px;border-radius:10px;
+  text-align:center;font-weight:600;margin-bottom:16px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="brand">
+    <img src="logo.png" alt="GGKSA logo">
+    <div>
+      <h1>GGKSA General Elections 2026</h1>
+      <p>Batch Calling — Admin Control</p>
+    </div>
+  </div>
+
+  <div class="card" id="passcodeCard">
+    <h2>Admin Access</h2>
+    <div class="passcode-row">
+      <input type="password" id="passcodeInput" placeholder="Enter admin passcode">
+      <button id="unlockBtn">Unlock</button>
+    </div>
+    <div id="lockStatus" class="locked-note">Enter the passcode to enable the Call Next Batch button.</div>
+  </div>
+
+  <div class="card">
+    <h2>Current Status</h2>
+    <div class="stat-row"><span>Total registered voters</span><span class="val" id="totalRegistered">–</span></div>
+    <div class="stat-row"><span>Total batches</span><span class="val" id="totalBatches">–</span></div>
+    <div class="stat-row"><span>Batches called so far</span><span class="val" id="batchesCalled">–</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Batch Currently Being Called</h2>
+    <div class="big-batch">
+      <div class="range" id="currentRange">–</div>
+      <div class="label" id="currentLabel">No batch called yet</div>
+    </div>
+  </div>
+
+  <div class="card" id="actionCard">
+    <div id="allDoneBanner" class="done-banner" style="display:none">All registered voters have been called.</div>
+    <button class="primary" id="nextBatchBtn" disabled>Call Next Batch</button>
+    <div id="actionMsg" class="msg"></div>
+  </div>
+
+  <div class="card">
+    <h2>Recent Batch History</h2>
+    <table>
+      <thead><tr><th>Batch</th><th>Range</th><th>Called At</th></tr></thead>
+      <tbody id="historyBody"><tr><td colspan="3">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// =====================================================================
+// CONFIG — same Apps Script Web App URL used by registration.html
+// =====================================================================
+const scriptURL = "https://script.google.com/macros/s/AKfycbxR5Y8vyb0ryrYrVKSkZLEr53MhsSr4LXIkyMurK7N3bXCvaUwxBFOwNt5RCcEGpeBlbA/exec";
+const POLL_INTERVAL_MS = 5000;
+
+// Kept only in memory for this page load — never hardcoded, never saved.
+let passcode = null;
+
+const passcodeInput = document.getElementById('passcodeInput');
+const unlockBtn = document.getElementById('unlockBtn');
+const lockStatus = document.getElementById('lockStatus');
+const nextBatchBtn = document.getElementById('nextBatchBtn');
+const actionMsg = document.getElementById('actionMsg');
+const allDoneBanner = document.getElementById('allDoneBanner');
+
+let latestState = null;
+
+function setMsg(text, type) {
+  actionMsg.textContent = text;
+  actionMsg.className = 'msg ' + (type || '');
+}
+
+unlockBtn.addEventListener('click', () => {
+  if (!passcodeInput.value.trim()) return;
+  passcode = passcodeInput.value.trim();
+  lockStatus.textContent = 'Unlocked for this session.';
+  lockStatus.className = 'unlocked-note';
+  updateButtonState();
+});
+
+function updateButtonState() {
+  if (!latestState) return;
+  const canCall = !!passcode && latestState.hasNext;
+  nextBatchBtn.disabled = !canCall;
+  allDoneBanner.style.display = (!latestState.hasNext && latestState.totalRegistered > 0) ? 'block' : 'none';
+}
+
+function renderState(state) {
+  latestState = state;
+  document.getElementById('totalRegistered').textContent = state.totalRegistered;
+  document.getElementById('totalBatches').textContent = state.totalBatches;
+  document.getElementById('batchesCalled').textContent = state.batchNumber;
+
+  if (state.tokens && state.tokens.length) {
+    document.getElementById('currentRange').textContent = `${state.rangeStart} – ${state.rangeEnd}`;
+    document.getElementById('currentLabel').textContent = `Batch ${state.batchNumber} of ${state.totalBatches}`;
+  } else {
+    document.getElementById('currentRange').textContent = '–';
+    document.getElementById('currentLabel').textContent = 'No batch called yet';
+  }
+
+  updateButtonState();
+}
+
+function renderHistory(data) {
+  const body = document.getElementById('historyBody');
+  if (!data.entries || !data.entries.length) {
+    body.innerHTML = '<tr><td colspan="3">No batches called yet.</td></tr>';
+    return;
+  }
+  body.innerHTML = data.entries.map(e => `
+    <tr><td>${e.batchNumber}</td><td>${e.range}</td><td>${new Date(e.calledAt).toLocaleTimeString()}</td></tr>
+  `).join('');
+}
+
+async function pollStatus() {
+  try {
+    const res = await fetch(`${scriptURL}?action=currentBatch`);
+    renderState(await res.json());
+  } catch (err) {
+    console.error('Status poll failed', err);
+  }
+}
+
+async function pollHistory() {
+  try {
+    const res = await fetch(`${scriptURL}?action=log`);
+    renderHistory(await res.json());
+  } catch (err) {
+    console.error('History poll failed', err);
+  }
+}
+
+nextBatchBtn.addEventListener('click', async () => {
+  if (!passcode) return;
+  nextBatchBtn.disabled = true;
+  setMsg('Calling next batch…', '');
+  try {
+    const body = new FormData();
+    body.append('action', 'nextBatch');
+    body.append('passcode', passcode);
+    const res = await fetch(scriptURL, { method: 'POST', body });
+    const result = await res.json();
+
+    if (result.error) {
+      setMsg(result.error, 'error');
+      if (result.error.toLowerCase().includes('passcode')) {
+        passcode = null;
+        lockStatus.textContent = 'Incorrect passcode. Enter it again.';
+        lockStatus.className = 'locked-note';
+      }
+    } else {
+      setMsg('Batch called successfully.', 'success');
+      renderState(result);
+      pollHistory();
+    }
+  } catch (err) {
+    setMsg('Request failed: ' + err.message, 'error');
+  } finally {
+    updateButtonState();
+  }
+});
+
+pollStatus();
+pollHistory();
+setInterval(pollStatus, POLL_INTERVAL_MS);
+setInterval(pollHistory, POLL_INTERVAL_MS * 2);
+</script>
+</body>
+</html>
