@@ -17,6 +17,28 @@
   --text:#eef6f3;
   --muted:#8ba79e;
 }
+body.day-mode{
+  --bg-1:#f4faf7;
+  --bg-2:#e7f3ee;
+  --panel:rgba(0,0,0,0.03);
+  --panel-border:rgba(0,0,0,0.12);
+  --teal:#0f8a6e;
+  --teal-bright:#0c9c7c;
+  --gold:#b9852f;
+  --text:#0b2620;
+  --muted:#4d6b62;
+}
+.mode-btn{
+  position:fixed;bottom:28px;left:28px;
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  color:var(--text);
+  padding:12px 20px;border-radius:12px;
+  font-weight:600;font-size:0.9rem;cursor:pointer;
+  backdrop-filter:blur(6px);
+  transition:background 0.2s ease;
+}
+.mode-btn:hover{background:rgba(255,255,255,0.08)}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 body{
@@ -155,6 +177,7 @@ body{
 <div class="progress" id="progress"></div>
 
 <button class="repeat-btn" id="repeatBtn">🔊 Repeat Announcement</button>
+<button class="mode-btn" id="modeBtn">☀️ Day Mode</button>
 <div class="note2">Developed by GGKSA General Elections Committee</div>
 <script>
 // =====================================================================
@@ -243,6 +266,20 @@ startBtn.addEventListener('click', () => {
 repeatBtn.addEventListener('click', () => {
   if (currentTokens.length) announceBatch(currentTokens);
 });
+
+const modeBtn = document.getElementById('modeBtn');
+
+modeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('day-mode');
+  const isDay = document.body.classList.contains('day-mode');
+  modeBtn.textContent = isDay ? '🌙 Night Mode' : '☀️ Day Mode';
+  localStorage.setItem('ggksaDayMode', isDay ? '1' : '0');
+});
+
+if (localStorage.getItem('ggksaDayMode') === '1') {
+  document.body.classList.add('day-mode');
+  modeBtn.textContent = '🌙 Night Mode';
+}
 </script>
 </body>
 </html>
