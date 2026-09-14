@@ -199,7 +199,6 @@ function render(state) {
     tokensContainer.innerHTML = '';
     emptyState.style.display = 'block';
     batchLabel.textContent = 'Waiting for first batch…';
-    progress.innerHTML = state.totalRegistered ? `<strong>${state.totalRegistered}</strong> voters registered` : '';
     return;
   }
 
