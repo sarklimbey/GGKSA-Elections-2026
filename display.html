@@ -229,7 +229,7 @@ function render(state) {
 
   emptyState.style.display = 'none';
   batchLabel.innerHTML = `Batch <strong>${state.batchNumber}</strong> of ${state.totalBatches} — Tokens <strong>${state.rangeStart}</strong> to <strong>${state.rangeEnd}</strong>`;
-  progress.innerHTML = `<strong>${state.totalRegistered}</strong> voters registered total`;
+  progress.innerHTML = ``;
 
   tokensContainer.innerHTML = state.tokens.map(t => `
     <div class="token-box"><div class="num">${t}</div></div>
