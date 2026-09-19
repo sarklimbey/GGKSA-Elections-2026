@@ -46,11 +46,11 @@ form.card{background:var(--card);border-radius:var(--radius);padding:18px;box-sh
 .row{display:flex;gap:var(--gap);flex-wrap:wrap;margin-bottom:20px}
 label{display:block;font-weight:600;font-size:0.9rem;margin-bottom:6px;color:var(--teal-dark)}
 .field{width:100%;margin-bottom:20px}
-input[type="text"], input[type="tel"], input[type="number"], input[type="file"]{
+input[type="text"], input[type="tel"], input[type="number"], input[type="file"], select{
   width:100%;padding:12px;border-radius:10px;border:1px solid #e6efec;background:#fbfffe;font-size:1rem;outline:none;
 }
 input[type="file"]{padding:10px}
-input:focus{box-shadow:0 0 0 3px rgba(11,107,90,0.08);border-color:var(--teal)}
+input:focus, select:focus{box-shadow:0 0 0 3px rgba(11,107,90,0.08);border-color:var(--teal)}
 .two{flex:1 1 48%;margin-bottom:0}
 .preview{display:flex;gap:10px;align-items:center;margin-top:8px}
 .preview img{width:92px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #eef6f3;background:#f8fdfc}
@@ -101,7 +101,15 @@ button.primary:active{transform:translateY(1px)}
         <input id="age" name="Age" type="number" min="16" max="120" required aria-required="true" placeholder="">
       </div>
     </div>
-
+    <div class="field">
+      <label for="gender">Gender</label>
+      <select id="gender" name="Gender" required aria-required="true">
+        <option value="" disabled selected>Select gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
     <div class="field">
       <label for="address">Address</label>
       <input id="address" name="Address" type="text" required placeholder="">
@@ -297,6 +305,7 @@ form.addEventListener('submit', async function (e) {
     data.append('Name', document.getElementById('name').value.trim());
     data.append('Phone', document.getElementById('phone').value.trim());
     data.append('Age', document.getElementById('age').value.trim());
+    data.append('Gender', document.getElementById('gender').value);
     data.append('Address', document.getElementById('address').value.trim());
     data.append('College', document.getElementById('college').value.trim());
     data.append('PhotoBase64', photoBase64);
